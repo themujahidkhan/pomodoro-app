@@ -1,0 +1,45 @@
+.timer-wrapper {
+  margin: 2% 8%;
+  text-align: center;
+}
+
+.top-tab button {
+  margin: 2%;
+  padding: 1rem;
+  border: none;
+}
+
+.btn-pomodoro {
+  background-color: tomato;
+  color: white;
+}
+
+.btn-shortBreak {
+  background-color: orange;
+  color: black;
+}
+
+.btn-longBreak {
+  background-color: green;
+  color: white;
+}
+
+.displayTimer {
+  font-size: 8rem;
+}
+
+.bottom-tab button {
+  padding: 1rem 2rem;
+  margin: 2%;
+  border: none;
+}
+
+.btn-start {
+  background-color: darkgreen;
+  color: white;
+}
+
+.btn-stop {
+  background-color: orangered;
+  color: white;
+}

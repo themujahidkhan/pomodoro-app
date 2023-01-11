@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import "../styles/Timer.css";
 
 function Timer() {
-  const [time, setTime] = useState([`${25} Minutes`, " : 00 Seconds"]);
+  const [time, setTime] = useState(25 * 60);
   let interval;
 
   function startTimer() {
@@ -17,11 +18,6 @@ function Timer() {
       secondsRemaining = i - minutes * 60;
 
       setTime([`${minutes} Minutes :`, ` ${secondsRemaining} Seconds`]);
-
-      if (minutes === 0 && secondsRemaining === 0) {
-        clearInterval(interval);
-        alert("Time is up");
-      }
     }
   }
 
@@ -31,16 +27,20 @@ function Timer() {
   }
 
   return (
-    <div>
-      <div>
-        <button>Pomodoro</button>
-        <button>Short Break</button>
-        <button>Long Break</button>
+    <div className="timer-wrapper">
+      <div className="top-tab">
+        <button className="btn-pomodoro">Pomodoro</button>
+        <button className="btn-shortBreak">Short Break</button>
+        <button className="btn-longBreak">Long Break</button>
       </div>
-      <h1>{time}</h1>
-      <div>
-        <button onClick={startTimer}>Start</button>
-        <button onClick={resetTimer}>Reset</button>
+      <h1 className="displayTimer">{time}</h1>
+      <div className="bottom-tab">
+        <button className="btn-start" onClick={startTimer}>
+          Start
+        </button>
+        <button className="btn-stop" onClick={resetTimer}>
+          Reset
+        </button>
       </div>
     </div>
   );
