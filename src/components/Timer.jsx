@@ -2,28 +2,15 @@ import React, { useState } from "react";
 import "../styles/Timer.css";
 
 function Timer() {
-  const [time, setTime] = useState(25 * 60);
-  let interval;
+  const [minutes, setMinutes] = useState(25);
+  const [seconds, setSeconds] = useState(0);
 
-  function startTimer() {
-    let i = 1500;
-    let minutes;
-    let secondsRemaining;
-
-    interval = setInterval(decrement, 1000);
-
-    function decrement() {
-      i = (i % 9000) - 1;
-      minutes = Math.floor(i / 60);
-      secondsRemaining = i - minutes * 60;
-
-      setTime([`${minutes} Minutes :`, ` ${secondsRemaining} Seconds`]);
-    }
-  }
+  const minutesTimer = minutes < 10 ? `0${minutes}` : minutes;
+  const secondsTimer = seconds < 10 ? `0${seconds}` : seconds;
 
   function resetTimer() {
-    clearInterval(interval);
-    setTime([25, " : 00"]);
+    setMinutes(0);
+    setSeconds(0);
   }
 
   return (
@@ -33,9 +20,16 @@ function Timer() {
         <button className="btn-shortBreak">Short Break</button>
         <button className="btn-longBreak">Long Break</button>
       </div>
-      <h1 className="displayTimer">{time}</h1>
+      <h1 className="displayTimer">
+        {minutesTimer}:{secondsTimer}
+      </h1>
       <div className="bottom-tab">
-        <button className="btn-start" onClick={startTimer}>
+        <button
+          className="btn-start"
+          onClick={() => {
+            alert("clicked");
+          }}
+        >
           Start
         </button>
         <button className="btn-stop" onClick={resetTimer}>
