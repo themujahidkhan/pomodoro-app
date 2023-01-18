@@ -2,34 +2,37 @@ import React, { useState, useEffect } from "react";
 import "../styles/Timer.css";
 
 function Timer() {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(5);
-  const [displayMessage, setDispalyMessage] = useState("");
+  const [time, setTime] = useState(1500);
+  const [isActive, setIsActive] = useState(false);
+  const [reset, setReset] = useState(false);
 
-  const minutesTimer = minutes < 10 ? `0${minutes}` : minutes;
-  const secondsTimer = seconds < 10 ? `0${seconds}` : seconds;
+  useEffect(() => {
+    if (isActive && time > 0) {
+      const interval = setInterval(() => {
+        setTime((time) => time - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [time, isActive, reset]);
 
-  const startTimer = useEffect(() => {
-    const interval = setInterval(() => {
-      clearInterval(interval);
+  const getTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes < 10 ? "0" + minutes : minutes}:${
+      seconds < 10 ? "0" + seconds : seconds
+    }`;
+  };
 
-      if (seconds === 0) {
-        if (minutes !== 0) {
-          setSeconds(59);
-          setMinutes(minutes - 1);
-        } else {
-          setDispalyMessage("Session complete");
-        }
-      } else {
-        setSeconds(seconds - 1);
-      }
-    }, 1000);
-  }, [seconds]);
+  // It will start, and stop the timer
+  const toggleActive = () => {
+    setIsActive(!isActive);
+  };
 
-  function resetTimer() {
-    setMinutes(0);
-    setSeconds(0);
-  }
+  // It will reset the timer
+  const resetTimer = () => {
+    setIsActive(!isActive);
+    setTime(1500);
+  };
 
   return (
     <div className="timer-wrapper">
@@ -39,14 +42,11 @@ function Timer() {
         <button className="btn-longBreak">Long Break</button>
       </div>
 
-      {<h1>{displayMessage}</h1> && (
-        <h1 className="displayTimer">
-          {minutesTimer}:{secondsTimer}
-        </h1>
-      )}
+      <h1 className="displayTimer">{getTime(time)}</h1>
+
       <div className="bottom-tab">
-        <button className="btn-start" onClick={startTimer}>
-          Start
+        <button className="btn-start" onClick={toggleActive}>
+          {isActive ? "Stop" : "Start"}
         </button>
         <button className="btn-stop" onClick={resetTimer}>
           Reset
