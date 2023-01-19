@@ -3,6 +3,7 @@ import "../styles/Timer.css";
 
 function Timer() {
   const [time, setTime] = useState(1500);
+  const [progress, setProgress] = useState(1500);
   const [isActive, setIsActive] = useState(false);
   const [reset, setReset] = useState(false);
 
@@ -10,6 +11,7 @@ function Timer() {
     if (isActive && time > 0) {
       const interval = setInterval(() => {
         setTime((time) => time - 1);
+        setProgress((progress) => progress - 1);
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -30,12 +32,13 @@ function Timer() {
 
   // It will reset the timer
   const resetTimer = () => {
-    setIsActive(!isActive);
+    setIsActive(false);
     setTime(1500);
   };
 
   return (
     <div className="timer-wrapper">
+      <div className="progressbar"></div>
       <div className="top-tab">
         <button className="btn-pomodoro">Pomodoro</button>
         <button className="btn-shortBreak">Short Break</button>
@@ -45,9 +48,14 @@ function Timer() {
       <h1 className="displayTimer">{getTime(time)}</h1>
 
       <div className="bottom-tab">
-        <button className="btn-start" onClick={toggleActive}>
-          {isActive ? "Stop" : "Start"}
+        <button
+          className="btn-start"
+          style={{ backgroundColor: isActive ? "red" : "green" }}
+          onClick={toggleActive}
+        >
+          {isActive ? "Pause" : "Start"}
         </button>
+
         <button className="btn-stop" onClick={resetTimer}>
           Reset
         </button>
