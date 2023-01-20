@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/Timer.css";
+import "../App.css";
 
 function Timer() {
   const [time, setTime] = useState(1500);
@@ -37,30 +37,32 @@ function Timer() {
   };
 
   return (
-    <div className="timer-wrapper">
-      <div className="progressbar"></div>
-      <div className="top-tab">
-        <button className="btn-pomodoro">Pomodoro</button>
-        <button className="btn-shortBreak">Short Break</button>
-        <button className="btn-longBreak">Long Break</button>
+    <>
+      <div className="timer-wrapper">
+        <div className="progressbar"></div>
+        <div className="top-tab">
+          <button className="btn-pomodoro">Pomodoro</button>
+          <button className="btn-shortBreak">Short Break</button>
+          <button className="btn-longBreak">Long Break</button>
+        </div>
+
+        <h1 className="displayTimer">{getTime(time)}</h1>
+
+        <div className="bottom-tab">
+          <button
+            className="btn-start"
+            style={{ backgroundColor: isActive ? "red" : "green" }}
+            onClick={toggleActive}
+          >
+            {isActive ? "Pause" : "Start"}
+          </button>
+
+          <button className="btn-stop" onClick={resetTimer}>
+            Reset
+          </button>
+        </div>
       </div>
-
-      <h1 className="displayTimer">{getTime(time)}</h1>
-
-      <div className="bottom-tab">
-        <button
-          className="btn-start"
-          style={{ backgroundColor: isActive ? "red" : "green" }}
-          onClick={toggleActive}
-        >
-          {isActive ? "Pause" : "Start"}
-        </button>
-
-        <button className="btn-stop" onClick={resetTimer}>
-          Reset
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 
