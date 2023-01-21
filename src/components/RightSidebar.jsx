@@ -8,18 +8,13 @@ function RightSidebar() {
           <h1>Tasks</h1>
           <input type="text" placeholder="Build frontend ..." />
         </div>
-        <div>
+        <div className="tasks">
           <ul>
             <li>Task1</li>
-            <li>Task2</li>
-            <li>Task3</li>
           </ul>
         </div>
         <div>
           <h1>Completed Tasks</h1>
-          <div>
-            <li>Task X</li>
-          </div>
         </div>
       </div>
     </div>

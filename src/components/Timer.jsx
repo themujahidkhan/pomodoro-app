@@ -39,7 +39,6 @@ function Timer() {
   return (
     <>
       <div className="timer-wrapper">
-        <div className="progressbar"></div>
         <div className="top-tab">
           <button className="btn-pomodoro">Pomodoro</button>
           <button className="btn-shortBreak">Short Break</button>
@@ -51,13 +50,16 @@ function Timer() {
         <div className="bottom-tab">
           <button
             className="btn-start"
-            style={{ backgroundColor: isActive ? "red" : "green" }}
+            style={{
+              backgroundColor: isActive ? "red" : "green",
+              color: "white",
+            }}
             onClick={toggleActive}
           >
             {isActive ? "Pause" : "Start"}
           </button>
 
-          <button className="btn-stop" onClick={resetTimer}>
+          <button className="btn-reset" onClick={resetTimer}>
             Reset
           </button>
         </div>
