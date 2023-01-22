@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+
 import "../App.css";
 
 function Timer() {
   const [time, setTime] = useState(1500);
   const [progress, setProgress] = useState(1500);
+
   const [isActive, setIsActive] = useState(false);
   const [reset, setReset] = useState(false);
 
