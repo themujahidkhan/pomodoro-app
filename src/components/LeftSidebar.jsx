@@ -1,4 +1,5 @@
 import React from "react";
+import natureIllustration from "../assets/nature.svg";
 import "../App.css";
 
 function LeftSidebar() {
