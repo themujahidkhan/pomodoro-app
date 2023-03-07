@@ -110,3 +110,18 @@ main {
   text-decoration: none;
   margin: 2rem 0;
 }
+
+/* Right sidebar */
+
+ul {
+  list-style: none;
+}
+
+.tasks {
+  text-transform: capitalize;
+}
+
+li {
+  padding: 0.5rem;
+  background-color: aliceblue;
+}
