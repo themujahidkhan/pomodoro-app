@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-
-import "../App.css";
+import { useEffect, useState } from "react";
 
 function Timer() {
   const [time, setTime] = useState(1500);
-  const [progress, setProgress] = useState(1500);
-
+  const [progress, setProgress] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [reset, setReset] = useState(false);
+
+  // Create a progress bar to show the timer in reactjs app using useEffect hook
 
   useEffect(() => {
     if (isActive && time > 0) {
       const interval = setInterval(() => {
-        setTime((time) => time - 1);
-        setProgress((progress) => progress - 1);
+        setTime((time) => (time >= 1 ? time - 1 : 0));
+        const progressValue = Math.floor(((1500 - time) / 1500) * 100);
+        setProgress(progressValue);
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -36,11 +36,20 @@ function Timer() {
   const resetTimer = () => {
     setIsActive(false);
     setTime(1500);
+    setProgress(0);
   };
 
   return (
     <>
       <div className="timer-wrapper">
+        <div style={{ backgroundColor: "#ccc" }}>
+          <div
+            className="progress-bar"
+            style={{
+              width: `${progress}%`,
+            }}
+          ></div>
+        </div>
         <div className="top-tab">
           <button className="btn-pomodoro">Pomodoro</button>
           <button className="btn-shortBreak">Short Break</button>
@@ -53,7 +62,7 @@ function Timer() {
           <button
             className="btn-start"
             style={{
-              backgroundColor: isActive ? "red" : "green",
+              backgroundColor: isActive ? "orange" : "green",
               color: "white",
             }}
             onClick={toggleActive}

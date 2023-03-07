@@ -64,6 +64,11 @@ main {
   cursor: pointer;
 }
 
+.progress-bar {
+  height: 10px;
+  background-color: #000;
+}
+
 .btn-pomodoro {
   background-color: lightgreen;
 }

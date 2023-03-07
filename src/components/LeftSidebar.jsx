@@ -1,27 +1,43 @@
-import React, { useState } from "react";
-import natureAudio from "../assets/nature.wav";
+import React, { useRef, useState } from "react";
+
 import lofiAudio from "../assets/lofi.wav";
+import natureAudio from "../assets/nature.wav";
 import whiteNoiseAudio from "../assets/white-noise.wav";
-import "../App.css";
 
 function LeftSidebar() {
-  const [currentMusic, setCurrentMusic] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const lofiRef = useRef();
+  const natureRef = useRef();
+  const whiteNoiseRef = useRef();
 
-  let natureMusic = new Audio(natureAudio);
-  let lofiMusic = new Audio(lofiAudio);
-  let whiteNoiseMusic = new Audio(whiteNoiseAudio);
+  const [lofiPlaying, setLofiPlaying] = useState(false);
+  const [naturePlaying, setNaturePlaying] = useState(false);
+  const [whiteNoisePlaying, setWhiteNoisePlaying] = useState(false);
 
-  const playNatureMusic = (e) => {
-    natureMusic.play();
+  const handleLofiClick = () => {
+    if (lofiPlaying) {
+      lofiRef.current.pause();
+    } else {
+      lofiRef.current.play();
+    }
+    setLofiPlaying(!lofiPlaying);
   };
 
-  const playLofi = () => {
-    lofiMusic.play();
+  const handleNatureClick = () => {
+    if (naturePlaying) {
+      natureRef.current.pause();
+    } else {
+      natureRef.current.play();
+    }
+    setNaturePlaying(!naturePlaying);
   };
 
-  const playWhiteNoise = () => {
-    whiteNoiseMusic.play();
+  const handleWhiteNoiseClick = () => {
+    if (whiteNoisePlaying) {
+      whiteNoiseRef.current.pause();
+    } else {
+      whiteNoiseRef.current.play();
+    }
+    setWhiteNoisePlaying(!whiteNoisePlaying);
   };
 
   return (
@@ -29,15 +45,18 @@ function LeftSidebar() {
       <div className="music-wrapper">
         <h1>Music</h1>
         <div className="music-card">
-          <div className="card-nature" onClick={playNatureMusic}>
+          <div className="card-nature" onClick={handleNatureClick}>
             Nature
           </div>
-          <div className="card-lofi" onClick={playLofi}>
+          <audio src={natureAudio} ref={natureRef} />
+          <div className="card-lofi" onClick={handleLofiClick}>
             Lofi
           </div>
-          <div className="card-whiteNoise" onClick={playWhiteNoise}>
+          <audio src={lofiAudio} ref={lofiRef} />
+          <div className="card-whiteNoise" onClick={handleWhiteNoiseClick}>
             White Noise
           </div>
+          <audio src={whiteNoiseAudio} ref={whiteNoiseRef} />
         </div>
       </div>
     </div>
