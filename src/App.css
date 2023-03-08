@@ -3,6 +3,11 @@
   font-family: "DM Sans", sans-serif;
 }
 
+body {
+  background-image: url("https://media.tenor.com/1VEnfKkMGikAAAAd/lofi-girl-music.gif");
+  background-size: cover;
+}
+
 /* Header Starts */
 
 .navbar {
