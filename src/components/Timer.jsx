@@ -1,26 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 
+import Confetti from "react-confetti";
 import RightSidebar from "./RightSidebar";
 import { Spotify } from "react-spotify-embed";
 import resetIcon from "../assets/reset-icon.svg";
+import useWindowSize from "react-use/lib/useWindowSize";
 
 function Timer() {
   const [time, setTime] = useState(1500);
-  const [progress, setProgress] = useState(0);
+  const [isConfettiActive, setIsConfettiActive] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const [reset, setReset] = useState(false);
+
   const [isSelected, setIsSelected] = useState(1);
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     if (isActive && time > 0) {
       const interval = setInterval(() => {
         setTime((time) => (time >= 1 ? time - 1 : 0));
-        const progressValue = Math.floor(((1500 - time) / 1500) * 100);
-        setProgress(progressValue);
       }, 1000);
       return () => clearInterval(interval);
+    } else if (time === 0) {
+      setIsConfettiActive(true);
+      setTime(1500);
+      setIsActive(false);
+      setTimeout(() => {
+        setIsConfettiActive(false);
+      }, 5000);
     }
-  }, [time, isActive, reset]);
+  }, [time, isActive]);
 
   const getTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -49,6 +57,7 @@ function Timer() {
 
   return (
     <div className=" overflow-hidden relative grid grid-flow-col grid-cols-3  gap-8 px-16  justify-center items-center align-middle h-screen bg-[url('https://i.imgur.com/2kJHylF.gif')]  bg-cover object-cover">
+      {isConfettiActive && <Confetti width={width} height={height} />}
       <div className="invisible h-full w-full" />
 
       <div className="text-center text-white">

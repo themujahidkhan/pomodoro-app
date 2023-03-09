@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
-    "react-spotify-embed": "^2.0.3"
+    "react-spotify-embed": "^2.0.3",
+    "react-use": "^17.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
