@@ -4,7 +4,7 @@ import Timer from "./components/Timer";
 
 function App() {
   return (
-    <div className="App">
+    <div className="h-screen m-0 p-0">
       <main>
         <Timer />
       </main>

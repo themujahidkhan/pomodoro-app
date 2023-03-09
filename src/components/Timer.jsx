@@ -1,179 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import lofiAudio from "../assets/lofi.wav";
-import lofiIcon from "../assets/lofi-icon.png";
-import logo from "../assets/logo.svg";
-import natureAudio from "../assets/nature.wav";
-import natureIcon from "../assets/nature-icon.png";
-import whiteNoiseAudio from "../assets/white-noise.wav";
-import whiteNoiseIcon from "../assets/whitenoise-icon.png";
-
-function Header() {
-  return (
-    <div className="navbar">
-      <div className="site-logo">
-        <img src={logo} />
-      </div>
-      <div className="nav-links">
-        <a href="">What is Pomodoro Technique?</a>
-      </div>
-    </div>
-  );
-}
-
-function TaskList({ tasks, toggleComplete }) {
-  return (
-    <ul>
-      {tasks.map((todo) => (
-        <li key={todo.id}>
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={() => toggleComplete(todo.id)}
-          />
-          <span className="tasks">{todo.name}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function RightSidebar() {
-  const [todos, setTodos] = useState(() => {
-    const savedTodos = JSON.parse(localStorage.getItem("todos"));
-    return savedTodos ? savedTodos : [];
-  });
-  const [taskName, setTaskName] = useState("");
-
-  const addTask = (e) => {
-    e.preventDefault();
-    if (taskName === "") {
-      return;
-    }
-    const newTask = {
-      id: todos.length + 1,
-      name: taskName,
-      completed: false,
-    };
-    setTodos([...todos, newTask]);
-    setTaskName("");
-    localStorage.setItem("todos", JSON.stringify([...todos, newTask]));
-  };
-
-  const toggleComplete = (id) => {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-  };
-
-  const completedTasks = todos.filter((todo) => todo.completed);
-  const incompleteTasks = todos.filter((todo) => !todo.completed);
-
-  return (
-    <div>
-      <div className="task-section">
-        <form onSubmit={addTask}>
-          <h1>Tasks</h1>
-          <input
-            type="text"
-            value={taskName}
-            onChange={(e) => setTaskName(e.target.value)}
-            placeholder="Build frontend ..."
-          />
-        </form>
-        <div className="tasks">
-          <h2>Incomplete Tasks</h2>
-
-          {incompleteTasks.length === 0 ? (
-            "No Pending tasks"
-          ) : (
-            <TaskList tasks={incompleteTasks} toggleComplete={toggleComplete} />
-          )}
-        </div>
-        <div>
-          <h2>Completed Tasks</h2>
-          <TaskList tasks={completedTasks} toggleComplete={toggleComplete} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LeftSidebar() {
-  const lofiRef = useRef();
-  const natureRef = useRef();
-  const whiteNoiseRef = useRef();
-
-  const [lofiPlaying, setLofiPlaying] = useState(false);
-  const [naturePlaying, setNaturePlaying] = useState(false);
-  const [whiteNoisePlaying, setWhiteNoisePlaying] = useState(false);
-
-  const handleLofiClick = () => {
-    if (lofiPlaying) {
-      lofiRef.current.pause();
-    } else {
-      lofiRef.current.play();
-    }
-    setLofiPlaying(!lofiPlaying);
-  };
-
-  const handleNatureClick = () => {
-    if (naturePlaying) {
-      natureRef.current.pause();
-    } else {
-      natureRef.current.play();
-    }
-    setNaturePlaying(!naturePlaying);
-  };
-
-  const handleWhiteNoiseClick = () => {
-    if (whiteNoisePlaying) {
-      whiteNoiseRef.current.pause();
-    } else {
-      whiteNoiseRef.current.play();
-    }
-    setWhiteNoisePlaying(!whiteNoisePlaying);
-  };
-
-  return (
-    <div>
-      <div className="music-wrapper">
-        <h2 className="text-3xl font-bold mb-8">Listen Music</h2>
-        <div className="music-card flex space-x-8  items-center">
-          <div
-            className="card-nature bg-green-400 w-16 h-16 p-2 rounded-lg"
-            onClick={handleNatureClick}
-          >
-            <img src={natureIcon} alt="nature icon" />
-            <p>Nature Music</p>
-          </div>
-          <audio src={natureAudio} ref={natureRef} />
-          <div
-            className="card-lofi bg-orange-300 w-16 h-16 p-2 rounded-lg"
-            onClick={handleLofiClick}
-          >
-            <img src={lofiIcon} alt="nature icon" />
-            <p>Lofi Music</p>
-          </div>
-          <audio src={lofiAudio} ref={lofiRef} />
-          <div
-            className="card-whiteNoise bg-gray-400 w-16 h-16 p-2 rounded-lg"
-            onClick={handleWhiteNoiseClick}
-          >
-            <img src={whiteNoiseIcon} alt="white noise icon" />
-            <p>White noise</p>
-          </div>
-          <audio src={whiteNoiseAudio} ref={whiteNoiseRef} />
-        </div>
-      </div>
-    </div>
-  );
-}
+import resetIcon from "../assets/reset-icon.svg";
 
 function Timer() {
   const [time, setTime] = useState(1500);
@@ -200,58 +27,63 @@ function Timer() {
     }`;
   };
 
-  // It will start, and stop the timer
   const toggleActive = () => {
     setIsActive(!isActive);
   };
 
-  // It will reset the timer
   const resetTimer = () => {
     setIsActive(false);
     setTime(1500);
     setProgress(0);
   };
 
+  const shortBreak = () => {
+    setTime(300);
+  };
+  const longBreak = () => {
+    setTime(600);
+  };
+
   return (
-    <div className="grid grid-cols-3 container mx-auto mt-8">
-      <div>
-        <LeftSidebar />
-      </div>
-      <div className="timer-wrapper">
-        <div style={{ backgroundColor: "#ccc" }}>
-          <div
-            className="progress-bar"
-            style={{
-              width: `${progress}%`,
-            }}
-          ></div>
-        </div>
-        <div className="top-tab">
-          <button className="btn-pomodoro">Pomodoro</button>
-          <button className="btn-shortBreak">Short Break</button>
-          <button className="btn-longBreak">Long Break</button>
-        </div>
-
-        <h1 className="displayTimer">{getTime(time)}</h1>
-
-        <div className="bottom-tab">
+    <div className=" overflow-hidden flex flex-col justify-center items-center align-middle h-screen bg-[url('https://i.imgur.com/2kJHylF.gif')]  bg-cover object-cover">
+      <div className="text-center text-white">
+        {/* <div className="bg-white">
+          <div className={`w-[${progress}%] h-2 my-8`}></div>
+        </div> */}
+        <div className="space-x-8 my-2 md:my-4 lg:my-8">
+          <button className="rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl  ">
+            Pomodoro
+          </button>
           <button
-            className="btn-start"
-            style={{
-              backgroundColor: isActive ? "orange" : "green",
-              color: "white",
-            }}
+            className="rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+            onClick={shortBreak}
+          >
+            Short Break
+          </button>
+          <button
+            className="rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+            onClick={longBreak}
+          >
+            Long Break
+          </button>
+        </div>
+
+        <h2 className="text-lg md:text-5xl lg:text-7xl xl:text-9xl xl:font-bold my-2">
+          {getTime(time)}
+        </h2>
+
+        <div className="space-x-5 items-center">
+          <button
+            className="px-4 py-2 rounded-full border-4 border-white hover:bg-white hover:text-black  "
             onClick={toggleActive}
           >
             {isActive ? "Pause" : "Start"}
           </button>
-
-          <button className="btn-reset" onClick={resetTimer}>
-            Reset
+          <button className="px-4 py-2 " onClick={resetTimer}>
+            <img src={resetIcon} alt="reset-icon" />
           </button>
         </div>
       </div>
-      <RightSidebar />
     </div>
   );
 }
