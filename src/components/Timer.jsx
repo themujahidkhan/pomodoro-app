@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
+import RightSidebar from "./RightSidebar";
 import { Spotify } from "react-spotify-embed";
 import resetIcon from "../assets/reset-icon.svg";
 
@@ -47,13 +48,15 @@ function Timer() {
   };
 
   return (
-    <div className=" overflow-hidden grid grid-flow-col   gap-8 px-16  justify-center items-center align-middle h-screen bg-[url('https://i.imgur.com/2kJHylF.gif')]  bg-cover object-cover">
+    <div className=" overflow-hidden relative grid grid-flow-col grid-cols-3  gap-8 px-16  justify-center items-center align-middle h-screen bg-[url('https://i.imgur.com/2kJHylF.gif')]  bg-cover object-cover">
+      <div className="invisible h-full w-full" />
+
       <div className="text-center text-white">
         <div className="space-x-8 my-2 md:my-4 lg:my-8">
           <button
             className={
               isSelected === 1
-                ? "rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+                ? "rounded-full bg-white text-black font-bold  p-2 text-sm md:text-md lg:text-lg xl:text-xl"
                 : "rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
             }
             onClick={() => handleTimers(1)}
@@ -63,7 +66,7 @@ function Timer() {
           <button
             className={
               isSelected === 2
-                ? "rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+                ? "rounded-full bg-white text-black font-bold  p-2 text-sm md:text-md lg:text-lg xl:text-xl"
                 : "rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
             }
             onClick={() => handleTimers(2)}
@@ -73,7 +76,7 @@ function Timer() {
           <button
             className={
               isSelected === 3
-                ? "rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+                ? "rounded-full bg-white text-black font-bold   p-2 text-sm md:text-md lg:text-lg xl:text-xl"
                 : "rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
             }
             onClick={() => handleTimers(3)}
@@ -101,8 +104,9 @@ function Timer() {
           </button>
         </div>
       </div>
+      <RightSidebar />
       <Spotify
-        className="absolute bottom-8"
+        className="absolute bottom-8 left-16"
         height={200}
         link="https://open.spotify.com/playlist/3vXUEGi4ip1EhI9OtdgdCy?si=49677e78d2cb4733"
       />
