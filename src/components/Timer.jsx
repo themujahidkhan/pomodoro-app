@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
+import { Spotify } from "react-spotify-embed";
 import resetIcon from "../assets/reset-icon.svg";
 
 function Timer() {
@@ -7,6 +8,7 @@ function Timer() {
   const [progress, setProgress] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [reset, setReset] = useState(false);
+  const [isSelected, setIsSelected] = useState(1);
 
   useEffect(() => {
     if (isActive && time > 0) {
@@ -31,38 +33,50 @@ function Timer() {
     setIsActive(!isActive);
   };
 
-  const resetTimer = () => {
-    setIsActive(false);
-    setTime(1500);
-    setProgress(0);
-  };
-
-  const shortBreak = () => {
-    setTime(300);
-  };
-  const longBreak = () => {
-    setTime(600);
+  const handleTimers = (index) => {
+    if (index === 1) {
+      setTime(1500);
+      setIsSelected(index);
+    } else if (index === 2) {
+      setTime(300);
+      setIsSelected(index);
+    } else if (index === 3) {
+      setTime(600);
+      setIsSelected(index);
+    }
   };
 
   return (
-    <div className=" overflow-hidden flex flex-col justify-center items-center align-middle h-screen bg-[url('https://i.imgur.com/2kJHylF.gif')]  bg-cover object-cover">
+    <div className=" overflow-hidden grid grid-flow-col   gap-8 px-16  justify-center items-center align-middle h-screen bg-[url('https://i.imgur.com/2kJHylF.gif')]  bg-cover object-cover">
       <div className="text-center text-white">
-        {/* <div className="bg-white">
-          <div className={`w-[${progress}%] h-2 my-8`}></div>
-        </div> */}
         <div className="space-x-8 my-2 md:my-4 lg:my-8">
-          <button className="rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl  ">
+          <button
+            className={
+              isSelected === 1
+                ? "rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+                : "rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+            }
+            onClick={() => handleTimers(1)}
+          >
             Pomodoro
           </button>
           <button
-            className="rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
-            onClick={shortBreak}
+            className={
+              isSelected === 2
+                ? "rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+                : "rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+            }
+            onClick={() => handleTimers(2)}
           >
             Short Break
           </button>
           <button
-            className="rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
-            onClick={longBreak}
+            className={
+              isSelected === 3
+                ? "rounded-full border-4 p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+                : "rounded-full p-2 text-sm md:text-md lg:text-lg xl:text-xl"
+            }
+            onClick={() => handleTimers(3)}
           >
             Long Break
           </button>
@@ -79,11 +93,19 @@ function Timer() {
           >
             {isActive ? "Pause" : "Start"}
           </button>
-          <button className="px-4 py-2 " onClick={resetTimer}>
+          <button
+            className="px-4 py-2 "
+            onClick={() => handleTimers(isSelected)}
+          >
             <img src={resetIcon} alt="reset-icon" />
           </button>
         </div>
       </div>
+      <Spotify
+        className="absolute bottom-8"
+        height={200}
+        link="https://open.spotify.com/playlist/3vXUEGi4ip1EhI9OtdgdCy?si=49677e78d2cb4733"
+      />
     </div>
   );
 }
