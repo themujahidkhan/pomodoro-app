@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import editIcon from "../assets/editIcon.svg";
+import deleteIcon from "../assets/deleteIcon.svg";
 
-function TaskList({ tasks, toggleComplete }) {
+function TaskList({ tasks, toggleComplete, deleteTask }) {
   return (
     <ul>
       {tasks.map((todo) => (
@@ -25,8 +25,11 @@ function TaskList({ tasks, toggleComplete }) {
               {todo.name}
             </span>
           </div>
-          <div className="items-center">
-            <img src={editIcon} className="h-5 px-8 " />
+          <div
+            className="items-center cursor-pointer"
+            onClick={() => deleteTask(todo.id)}
+          >
+            <img src={deleteIcon} className="h-5 px-8 " />
           </div>
         </li>
       ))}
@@ -56,6 +59,12 @@ function RightSidebar() {
     localStorage.setItem("todos", JSON.stringify([...todos, newTask]));
   };
 
+  function deleteTask(id) {
+    setTodos((prevTasks) => {
+      return prevTasks.filter((task) => task.id !== id);
+    });
+  }
+
   const toggleComplete = (id) => {
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
@@ -69,8 +78,6 @@ function RightSidebar() {
 
   const completedTasks = todos.filter((todo) => todo.completed);
   const incompleteTasks = todos.filter((todo) => !todo.completed);
-
-  const editTask = (id) => {};
 
   return (
     <div className="h-full w-full justify-center flex flex-col">
@@ -90,16 +97,26 @@ function RightSidebar() {
             Incomplete Tasks
           </h3>
           {incompleteTasks.length === 0 ? (
-            <p className="my-8">No pending tasks</p>
+            <p className="my-8 text-md">
+              No pending tasks, add one to complete
+            </p>
           ) : (
-            <TaskList tasks={incompleteTasks} toggleComplete={toggleComplete} />
+            <TaskList
+              tasks={incompleteTasks}
+              toggleComplete={toggleComplete}
+              deleteTask={deleteTask}
+            />
           )}
         </div>
         <div>
           <h3 className="text-2xl my-2 font-semibold text-green-300">
             Completed Tasks
           </h3>
-          <TaskList tasks={completedTasks} toggleComplete={toggleComplete} />
+          <TaskList
+            tasks={completedTasks}
+            toggleComplete={toggleComplete}
+            deleteTask={deleteTask}
+          />
         </div>
       </div>
     </div>
