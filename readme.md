@@ -2,7 +2,7 @@
 
 ![screenshot](https://i.imgur.com/tDCh0ql.png)
 
-##### DEMO URL 👉: [Live URL](pomodoro-g7bsyqvj8-themujahidkhan.vercel.app)
+##### DEMO URL 👉: [Live URL](https://pomodoro-g7bsyqvj8-themujahidkhan.vercel.app)
 
 ### Tech Stack
 
