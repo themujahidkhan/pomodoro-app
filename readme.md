@@ -2,6 +2,8 @@
 
 ![screenshot](https://i.imgur.com/tDCh0ql.png)
 
+##### DEMO URL 👉: [Live URL](pomodoro-g7bsyqvj8-themujahidkhan.vercel.app)
+
 ### Tech Stack
 
 - ReactJS
@@ -15,4 +17,4 @@
 
 
 
-##### Author - [Mujahid Khan](https://twitter.com/themujahidkhan)
+##### Developed By - [Mujahid Khan](https://twitter.com/themujahidkhan)
