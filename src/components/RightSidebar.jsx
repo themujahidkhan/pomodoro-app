@@ -50,7 +50,7 @@ function RightSidebar() {
       return;
     }
     const newTask = {
-      id: todos.length + 1,
+      id: Date.now(),
       name: taskName,
       completed: false,
     };
@@ -59,11 +59,11 @@ function RightSidebar() {
     localStorage.setItem("todos", JSON.stringify([...todos, newTask]));
   };
 
-  function deleteTask(id) {
-    setTodos((prevTasks) => {
-      return prevTasks.filter((task) => task.id !== id);
-    });
-  }
+  const deleteTask = (id) => {
+    const updatedTodos = todos.filter((task) => task.id !== id);
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+  };
 
   const toggleComplete = (id) => {
     const updatedTodos = todos.map((todo) => {
@@ -80,12 +80,12 @@ function RightSidebar() {
   const incompleteTasks = todos.filter((todo) => !todo.completed);
 
   return (
-    <div className="h-full w-full justify-center flex flex-col">
-      <div className="task-section bg-gray-300 text-white  rounded-lg bg-opacity-20 py-8 px-8 h-4/5">
+    <div className="h-full w-full justify-center hidden lg:flex lg:px-4 lg:mt-32">
+      <div className=" backdrop-blur-md text-white rounded-lg bg-opacity-20 py-8 px-8 h-4/5">
         <form onSubmit={addTask}>
-          <h2 className="text-4xl my-2 font-bold ">Tasks</h2>
+          <h2 className="text-4xl my-2 font-bold xl:text-5xl xl:my-3">Tasks</h2>
           <input
-            className="bg-transparent focus:bg-white text-black focus:placeholder:text-slate-500 placeholder:text-slate-300 border-white border-4 indent-4  p-2 w-80 text-lg rounded my-2"
+            className="bg-transparent focus:bg-white   text-black focus:placeholder:text-slate-500 placeholder:text-slate-300 border-white border-4 indent-4  p-2 w-80 text-lg rounded my-2"
             type="text"
             value={taskName}
             onChange={(e) => setTaskName(e.target.value)}
@@ -93,7 +93,7 @@ function RightSidebar() {
           />
         </form>
         <div className="tasks">
-          <h3 className="text-2xl my-2 font-semibold text-red-3 00">
+          <h3 className="text-2xl my-2 font-semibold text-red-400 ">
             Incomplete Tasks
           </h3>
           {incompleteTasks.length === 0 ? (
